@@ -425,6 +425,24 @@ test_that("quarters accessor extracts correct quarter", {
   )
 })
 
+test_that("fiscal_year accessor extracts correct fiscal year", {
+  x <- ymd(c(
+    "2018-07-15", "2018-12-27", "2019-01-01",
+    "2019-06-01", "2019-07-01", "2019-10-16",
+    "2019-12-31", "2020-01-01", "2020-06-30",
+    "2020-07-01", "2020-11-09", "2021-01-19",
+    "2021-06-30", "2021-07-01"
+  ))
+
+  expect_equal(
+    fiscal_year(x, fiscal_start = 10),
+    c(2018, 2019, 2019, 2019,
+      2019, 2020, 2020, 2020,
+      2020, 2020, 2021, 2021,
+      2021, 2021)
+  )
+})
+
 test_that("years accessor extracts correct year", {
   poslt <- as.POSIXlt("2010-02-03 13:45:59",
     tz = "UTC", format

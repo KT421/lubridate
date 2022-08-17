@@ -71,6 +71,18 @@ quarter <- function(x, type = "quarter", fiscal_start = 1, with_year = identical
 
 #' @rdname quarter
 #' @export
+fiscal_year <- function(x, fiscal_start = 1) {
+  fs <- (fiscal_start - 1) %% 12
+  shifted <- seq(fs, 11 + fs) %% 12 + 1
+  m <- month(x)
+  s <- match(m, shifted)
+
+  nxt_year_months <- if (fs != 0) (fs + 1):12
+  year(x) + (m %in% nxt_year_months)
+}
+
+#' @rdname quarter
+#' @export
 semester <- function(x, with_year = FALSE) {
   m <- month(x)
   semesters <- rep(1:2, each = 6)
